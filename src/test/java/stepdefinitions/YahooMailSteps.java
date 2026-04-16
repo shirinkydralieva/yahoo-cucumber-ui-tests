@@ -14,6 +14,7 @@ import pages.InboxPage;
 import pages.MailDialogPage;
 import pages.MailFolderPage;
 import service.LoginService;
+import org.testng.asserts.SoftAssert;
 
 public class YahooMailSteps {
 
@@ -73,10 +74,11 @@ public class YahooMailSteps {
     mailDialogPage
         .waitMailDialogToBeOpened();
 
-    assertTrue(isMailInDraftFolder);
-    assertEquals(mailDialogPage.getRecipientText(RECIPIENT), RECIPIENT);
-    assertEquals(mailDialogPage.getSubjectTitleValue(), SUBJECT);
-    assertEquals(mailDialogPage.getBodyText(), BODY);
+    SoftAssert softAssert = new SoftAssert();
+    softAssert.assertTrue(isMailInDraftFolder);
+    softAssert.assertEquals(mailDialogPage.getRecipientText(RECIPIENT), RECIPIENT);
+    softAssert.assertEquals(mailDialogPage.getSubjectTitleValue(), SUBJECT);
+    softAssert.assertEquals(mailDialogPage.getBodyText(), BODY);
   }
 
  @Given("I have a draft with recipient, subject and body filled")
@@ -102,8 +104,10 @@ public class YahooMailSteps {
        .openSent()
        .isMailDisplayed(SUBJECT);
 
-   assertTrue(isMailDisappearedFromDrafts);
-   assertTrue(isMailInSentFolder);
+   SoftAssert softAssert = new SoftAssert();
+   softAssert.assertTrue(isMailDisappearedFromDrafts);
+   softAssert.assertTrue(isMailInSentFolder);
+   softAssert.assertAll();
  }
 
  @When("I enter {string} as recipient")
@@ -113,9 +117,6 @@ public class YahooMailSteps {
 
  @Then("I see an error message about invalid email address")
   public void verifyInvalidEmailErrorMessageIsShown(){
-    boolean isAlertDisplayed = mailDialogPage
-        .isIncorrectEmailAlertDisplayed();
-
-    assertTrue(isAlertDisplayed);
+    assertTrue(mailDialogPage.isIncorrectEmailAlertDisplayed());
  }
 }
