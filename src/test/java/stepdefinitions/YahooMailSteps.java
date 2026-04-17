@@ -79,6 +79,7 @@ public class YahooMailSteps {
     softAssert.assertEquals(mailDialogPage.getRecipientText(RECIPIENT), RECIPIENT);
     softAssert.assertEquals(mailDialogPage.getSubjectTitleValue(), SUBJECT);
     softAssert.assertEquals(mailDialogPage.getBodyText(), BODY);
+    softAssert.assertAll();
   }
 
  @Given("I have a draft with recipient, subject and body filled")
